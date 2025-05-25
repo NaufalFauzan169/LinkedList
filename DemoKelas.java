@@ -1,6 +1,6 @@
 public class DemoKelas {
     public static void main(String[] args) {
-        Siswa zann = new Siswa("Zann");
+        Siswa zann = new Siswa("Muhamad");
 
         Kelas k = new Kelas(zann);
 
@@ -41,7 +41,7 @@ System.out.println(" ");
 System.out.println(" ");
 
         // Test tambahDiDepan
-        System.out.println("Menambahkan siswa di depan, sebelum Zann");
+        System.out.println("Menambahkan siswa di depan, sebelum Muhamad");
         k.tambahDiDepan(new Siswa("Naufal"));
         k.tampilkanSemua();
 
