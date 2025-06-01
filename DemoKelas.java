@@ -16,9 +16,9 @@ System.out.println(" ");
 
         // Test ambilDi
         System.out.println("sekarang kita mau ambil salah satu siswa");
-        Siswa siswaAmbilDi = k.ambilDi(2);
+        Siswa siswaAmbilDi = k.ambilDi(7);
         if (siswaAmbilDi != null) {
-            System.out.println("kita ambil siswa : " + siswaAmbilDi.nama);
+            System.out.println("kita ambil siswa ke-7 yaitu: " + siswaAmbilDi.nama);
         } else {
             System.out.println("No siswa ambilDi 2");
         }
