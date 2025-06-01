@@ -17,7 +17,7 @@ public class DemoKelas {
         System.out.println("List siswa setelah ditambah di depan");
         k.tampilkanSemua();
 
-        Integer urutan = 6;
+        Integer urutan = 7;
         Siswa x = k.ambilDi(urutan);
         if(x != null) {
             System.out.println("Siswa urutan "+ urutan +" : "+x.nama);

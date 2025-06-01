@@ -5,7 +5,6 @@ public class Kelas {
         pertama = x;
     }
 
-    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
     public Siswa ambilDi(Integer index){ // 5
         Integer urutan = 0;
         Siswa sekarang = pertama; //Naufal
