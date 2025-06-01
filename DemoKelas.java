@@ -1,6 +1,6 @@
 public class DemoKelas {
     public static void main(String[] args) {
-        Siswa zann = new Siswa("Muhamad");
+        Siswa zann = new Siswa("Naufal");
 
         Kelas k = new Kelas(zann);
 
@@ -12,57 +12,60 @@ public class DemoKelas {
         System.out.println("List siswa awal");
         k.tampilkanSemua();
 
-System.out.println(" ");
+      k.tambahDiDepan(new Siswa("Muhamad"));
+        System.out.println("=========================");
+        System.out.println("List siswa setelah ditambah di depan");
+        k.tampilkanSemua();
 
-        // Test ambilDi
-        System.out.println("sekarang kita mau ambil salah satu siswa");
-        Siswa siswaAmbilDi = k.ambilDi(7);
-        if (siswaAmbilDi != null) {
-            System.out.println("kita ambil siswa ke-7 yaitu: " + siswaAmbilDi.nama);
+        Integer urutan = 6;
+        Siswa x = k.ambilDi(urutan);
+        if(x != null) {
+            System.out.println("Siswa urutan "+ urutan +" : "+x.nama);
         } else {
-            System.out.println("No siswa ambilDi 2");
+            System.out.println("Siswa urutan "+urutan+" tidak ada");
         }
 
-System.out.println(" ");
 
-        // Test urutan
-        System.out.println("Sekarang kita ingin menampilkan siswa itu di urutan ke berapa");
-        int urutanKe = k.urutan("Ainun");
-        System.out.println("Ainun urutan ke: " + urutanKe);
+        System.out.println("===================");
+        System.out.println("Jumlah siswa : "+k.jumlahSiswa());
 
-        // int indexOfNonExist = k.urutan("NonExist");
-        // System.out.println("Index of NonExist: " + indexOfNonExist);
+        Kelas k1 = new Kelas(null);
+        System.out.println("Jumlah siswa : "+k1.jumlahSiswa());
 
-System.out.println(" ");
+        System.out.println("=========================");
+        System.out.println("Cari nama Ojan di kelas kosong : " +k1.urutan("Ojan"));
+        System.out.println("Cari nama Ojan di kelas berisi : " +k.urutan("Ojan"));
+        System.out.println("Cari nama Siti di kelas berisi : " +k.urutan("Siti"));
+        System.out.println("Cari nama Muhamad di kelas berisi : " +k.urutan("Muhamad"));
+        System.out.println("Cari nama Zahra di kelas berisi : " +k.urutan("Zahra"));
 
-        // Test jumlahSiswa
-        System.out.println("Jumlah siswa: " + k.jumlahSiswa());
-
-System.out.println(" ");
-
-        // Test tambahDiDepan
-        System.out.println("Menambahkan siswa di depan, sebelum Muhamad");
-        k.tambahDiDepan(new Siswa("Naufal"));
+        System.out.println("=========================");
+        System.out.println("tambah siswa Fauzan setelah Naufal");
+        k.tambahSetelah("Naufal", new Siswa("Fauzan"));
         k.tampilkanSemua();
+        System.out.println("Jumlah siswa : "+k.jumlahSiswa());
 
-System.out.println(" ");
+        System.out.println("=========================");
+        k1.hapus("Nopal");
+        k1 = new Kelas(new Siswa("Nopal"));
+        System.out.println("Setelah di-add");
+        k1.tampilkanSemua();
 
-        // Test tambahSetelah
-        System.out.println("Menambahkan siswa setelah Siti");
-        k.tambahSetelah("Siti", new Siswa("Fauzan"));
+        k1.hapus("Nopal");
+        System.out.println("Setelah dihapus");
+        k1.tampilkanSemua();
+
+        System.out.println("========== Sebelum dihapus ===============");
         k.tampilkanSemua();
-
-System.out.println(" ");
-
-        // Test hapus
-        System.out.println("Menghapus siswa");
-        k.hapus("Tahtia");
+        k.hapus("Muhamad");
+        System.out.println("========== Setelah hapus pertama ===============");
         k.tampilkanSemua();
-
-        // k.hapus("Naufal");
-        // k.tampilkanSemua();
-
-        // k.hapus("NonExist"); // Should do nothing
-        // k.tampilkanSemua();
+        k.hapus("Siti");
+        System.out.println("========== Setelah hapus tengah ===============");
+        k.tampilkanSemua();
+        k.hapus("Zahra");
+        System.out.println("========== Setelah hapus akhir ===============");
+        k.tampilkanSemua();
     }
+
 }

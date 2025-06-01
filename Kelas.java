@@ -5,40 +5,67 @@ public class Kelas {
         pertama = x;
     }
 
-    public Siswa ambilDi(Integer index){
-        Siswa sekarang = pertama;
-        int hitung = 0;
-        while(sekarang != null){
-            if(hitung == index){
+    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
+    public Siswa ambilDi(Integer index){ // 5
+        Integer urutan = 0;
+        Siswa sekarang = pertama; //Naufal
+
+        // urutan = 7, siswa = null
+        while(true) {
+            if(urutan == index) {
                 return sekarang;
             }
-            sekarang = sekarang.berikutnya;
-            hitung++;
+
+            // robustness : bisa menghandel inputan yang tidak benar
+            if(sekarang.berikutnya == null){
+                return null;
+            }
+
+            urutan++;
+            // pindah ke record berikutnya
+            sekarang = sekarang.berikutnya; 
         }
-        return null; // index out of bounds
     }
 
     public Integer urutan(String nama){
+        Integer urutan = 0;
         Siswa sekarang = pertama;
-        int index = 0;
-        while(sekarang != null){
-            if(sekarang.nama.equals(nama)){
-                return index;
-            }
-            sekarang = sekarang.berikutnya;
-            index++;
+
+        // supaya robust
+        if(sekarang == null){
+            return null;
         }
-        return -1; // not found
+
+        if(nama.equals(sekarang.nama)) {
+            return urutan;
+        }
+
+        while(sekarang.berikutnya != null){
+            urutan++;
+            sekarang = sekarang.berikutnya;
+
+            if(nama.equals(sekarang.nama)) {
+                return urutan;
+            }
+        }
+        return null;
     }
 
     public Integer jumlahSiswa(){
+        Integer jumlah = 0;
         Siswa sekarang = pertama;
-        int count = 0;
-        while(sekarang != null){
-            count++;
+
+        // supaya robust
+        if(sekarang == null){
+            return jumlah;
+        }
+
+        jumlah++;  //1
+        while(sekarang.berikutnya != null){
+            jumlah++;
             sekarang = sekarang.berikutnya;
         }
-        return count;
+        return jumlah;
     }
 
     public void tambahDiDepan(Siswa s){
@@ -47,35 +74,66 @@ public class Kelas {
     }
 
     public void tambahSetelah(String nama, Siswa s){
-        Siswa sekarang = pertama;
-        while(sekarang != null){
-            if(sekarang.nama.equals(nama)){
-                s.berikutnya = sekarang.berikutnya;
-                sekarang.berikutnya = s;
-                return;
-            }
-            sekarang = sekarang.berikutnya;
+        // menggunakan method yang sudah ada, tapi sebetulnya lemot
+        // TODO: bahas di sesi tentang notasi O
+        Integer urutan = urutan(nama);
+
+        // robustness
+        // kalau tidak ketemu, throw exception element tidak ketemu
+        if(urutan == null) {
+            throw new IllegalArgumentException(nama + " tidak ada di dalam kelas ini");
         }
-        // If nama not found, do nothing or optionally add at end or throw error
+
+        // kondisi existing
+        Siswa x = ambilDi(urutan);
+        Siswa setelahX = x.berikutnya;
+
+        // selipkan s setelah x
+        x.berikutnya = s;
+        s.berikutnya = setelahX;
     }
 
+    @SuppressWarnings("UnnecessaryReturnStatement")
     public void hapus(String nama){
-        if(pertama == null) return;
+        Siswa sekarang = pertama;
 
-        if(pertama.nama.equals(nama)){
-            pertama = pertama.berikutnya;
+        // kelas kosong, tidak ada yang dihapus
+        if(sekarang == null){
             return;
         }
 
-        Siswa sekarang = pertama;
+        // kalau yang dihapus elemen pertama, 
+        // cukup pindahkan status pertama ke element berikutnya
+        // nanti test : 
+        // - hapus elemen pertama dari list berisi banyak
+        // - hapus elemen pertama dari list berisi satu
+        // - hapus elemen pertama dari list kosong
+        if(nama.equals(sekarang.nama)) {
+            if(sekarang.berikutnya != null) {
+                pertama = sekarang.berikutnya;
+            } else {
+                pertama = null;
+            }
+            return;
+        }
+
+        // nanti test :
+        // - hapus elemen tengah
+        // - hapus elemen terakhir
         while(sekarang.berikutnya != null){
-            if(sekarang.berikutnya.nama.equals(nama)){
-                sekarang.berikutnya = sekarang.berikutnya.berikutnya;
+            Siswa sebelumnya = sekarang;
+            sekarang = sekarang.berikutnya;
+
+            if(nama.equals(sekarang.nama)) {
+                if(sekarang.berikutnya != null) {
+                    sebelumnya.berikutnya = sekarang.berikutnya;
+                } else {
+                    sebelumnya.berikutnya = null;
+                }
                 return;
             }
-            sekarang = sekarang.berikutnya;
         }
-        // If nama not found, do nothing
+        return;
     }
 
     public void tambahDiBelakang(Siswa s){
@@ -87,8 +145,12 @@ public class Kelas {
         Integer urutan = 0;
         System.out.println("Sekarang urutan ke : "+urutan);
 
-        Siswa sekarang = pertama; //endy
-        System.out.println("Siswa sekarang : "+sekarang.nama);
+        Siswa sekarang = pertama;
+        if(sekarang == null) {
+            System.out.println("Kelas kosong");
+            return;
+        }
+        System.out.println("Siswa sekarang : "+ sekarang.nama);
 
         while(sekarang.berikutnya != null) {
             urutan++;
